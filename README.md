@@ -18,13 +18,14 @@ It is a **thin guarded layer** that runs next to the [official Webflow MCP](http
 ## Setup
 
 ```bash
-npm install
-npm run build
-cp clients.example.json clients.json   # fill in real site ids
-cp .env.example .env                    # add WEBFLOW_API_TOKEN (and per-client tokens)
+git clone https://github.com/arjunbellur/callisto-webflow-intelligence.git
+cd callisto-webflow-intelligence
+npm run setup
 ```
 
-Find a site id with the official Webflow MCP (`data_sites_tool > list_sites`) or in Webflow under Site settings > General.
+`npm run setup` installs and builds, asks for a Webflow token (Workspace settings > Apps & integrations > API access; scopes: sites, pages, cms, custom_code) and stores it in `.env`, then lists every site the token can reach and writes them to `clients.json` with generated aliases. Re-running keeps existing tokens and entries. It ends by printing the Claude config snippet.
+
+Manual alternative: `cp clients.example.json clients.json`, `cp .env.example .env`, fill both in, `npm run build`.
 
 ### Claude Desktop / Claude Code
 
