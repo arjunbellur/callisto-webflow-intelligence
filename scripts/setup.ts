@@ -4,7 +4,7 @@
  *
  *   npm run setup
  *
- * 1. Verifies Node, installs dependencies and builds.
+ * 1. Verifies Node and builds (npm run setup installs dependencies first).
  * 2. Reads WEBFLOW_API_TOKEN from .env or prompts for it (input hidden) and writes .env.
  * 3. Lists every site the token can reach and generates clients.json (existing entries are kept).
  * 4. Prints the Claude Desktop / Claude Code config snippet with the absolute path.
@@ -97,7 +97,6 @@ async function main(): Promise<void> {
   const [major] = process.versions.node.split(".").map(Number);
   if (!major || major < 20) fail(`Node 20+ is required (found ${process.versions.node}).`);
 
-  if (!existsSync(path.join(root, "node_modules", "@modelcontextprotocol"))) run("npm install");
   run("npm run build");
 
   // Token: env var > .env > prompt.
