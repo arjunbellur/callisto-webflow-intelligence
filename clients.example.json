@@ -1,0 +1,20 @@
+{
+  "clients": [
+    {
+      "alias": "acme",
+      "name": "Acme Widgets",
+      "siteId": "000000000000000000000000",
+      "liveUrl": "https://www.acme.com",
+      "notes": "Marketing site. Blog lives in the 'Posts' collection."
+    },
+    {
+      "alias": "globex",
+      "name": "Globex Corp",
+      "siteId": "111111111111111111111111",
+      "tokenEnv": "WEBFLOW_TOKEN_GLOBEX",
+      "liveUrl": "https://globex.example",
+      "readOnly": true,
+      "notes": "Client's own workspace; separate token. Writes are disabled until the retainer starts."
+    }
+  ]
+}

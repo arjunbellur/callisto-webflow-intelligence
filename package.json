@@ -1,0 +1,31 @@
+{
+  "name": "callisto-webflow-mcp",
+  "version": "0.1.0",
+  "description": "Callisto's guarded Webflow operations layer: an MCP server that adds a client registry, dry-run/confirm writes, snapshots, rollback, audit logging, gated publishing and live verification on top of the Webflow Data API.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "callisto-mcp": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.2"
+  }
+}
