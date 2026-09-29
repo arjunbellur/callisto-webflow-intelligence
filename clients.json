@@ -1,0 +1,70 @@
+{
+  "clients": [
+    {
+      "alias": "tchama",
+      "name": "Tchama",
+      "siteId": "644c3b37a49897b22416c977",
+      "liveUrl": "https://tchama.webflow.io"
+    },
+    {
+      "alias": "kings-tree-and-outdoor-services-llc",
+      "name": "Kings Tree and Outdoor Services LLC",
+      "siteId": "6463aa43e27dd6764bc37675",
+      "liveUrl": "https://www.kingstreeoutdoor.com"
+    },
+    {
+      "alias": "yuma-lodge-saly",
+      "name": "YUMA Lodge Saly",
+      "siteId": "64b5c70a0b0abce08f5c64e9",
+      "liveUrl": "https://www.yumalodge.com"
+    },
+    {
+      "alias": "wadi-websites",
+      "name": "WADI websites",
+      "siteId": "65aaa815b500a62ce0d1f628",
+      "liveUrl": "https://www.wadi-ltd.com"
+    },
+    {
+      "alias": "coronado-total-auto-repair",
+      "name": "CORONADO TOTAL AUTO REPAIR",
+      "siteId": "66e62077c40e1bbd3fb04c89",
+      "liveUrl": "https://www.coronadototalautorepair.com"
+    },
+    {
+      "alias": "callisto-designs",
+      "name": "Callisto-designs",
+      "siteId": "68604758452d5badd2588769",
+      "liveUrl": "https://www.callistodesigns.com"
+    },
+    {
+      "alias": "zapata-thera",
+      "name": "Zapata Thera",
+      "siteId": "68d321baed4f5c8adf1b2a0a",
+      "liveUrl": "https://zapata-thera.webflow.io"
+    },
+    {
+      "alias": "scb-tours",
+      "name": "SCB Tours",
+      "siteId": "68f16928703d586e7b6e9649",
+      "liveUrl": "https://www.scbgolf.com"
+    },
+    {
+      "alias": "daniel-rogers",
+      "name": "Daniel Rogers",
+      "siteId": "696be9bc0a043aa00d4d19d5",
+      "liveUrl": "https://www.danrogerscpa.com"
+    },
+    {
+      "alias": "animated-butttons",
+      "name": "Animated Butttons",
+      "siteId": "697912936cf1aeadeea33771",
+      "liveUrl": "https://animated-butttons.webflow.io"
+    },
+    {
+      "alias": "mapbox",
+      "name": "MAPBOX",
+      "siteId": "6980b42f562d3114cd665272",
+      "liveUrl": "https://mapbox-cba022.webflow.io"
+    }
+  ]
+}
