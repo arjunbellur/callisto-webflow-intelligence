@@ -1,0 +1,16 @@
+#!/bin/bash
+# Launcher for the Callisto MCP server. Builds on first use so MCP hosts can start it in a fresh
+# checkout without depending on a setup hook having finished. All build output goes to stderr;
+# stdout is reserved for the MCP protocol.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+if [ ! -f dist/index.js ] || [ ! -d node_modules/@modelcontextprotocol ]; then
+  echo "[callisto-mcp] building server..." >&2
+  npm install --no-audit --no-fund >&2
+  npm run build >&2
+fi
+
+exec node dist/index.js
