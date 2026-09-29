@@ -25,6 +25,8 @@ npm run setup
 
 `npm run setup` installs and builds, asks for a Webflow token (Workspace settings > Apps & integrations > API access; scopes: sites, pages, cms, custom_code) and stores it in `.env`, then lists every site the token can reach and writes them to `clients.json` with generated aliases. Re-running keeps existing tokens and entries. It ends by printing the Claude config snippet.
 
+To replace the token later, run `npm run token`: it verifies the new token against Webflow and only saves it when it works.
+
 Manual alternative: `cp clients.example.json clients.json`, `cp .env.example .env`, fill both in, `npm run build`.
 
 ### Claude Desktop / Claude Code
