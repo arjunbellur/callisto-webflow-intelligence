@@ -23,6 +23,19 @@ cd callisto-webflow-intelligence
 npm run setup
 ```
 
+### One credential for the whole workspace (recommended)
+
+Workspace API tokens cannot access sites, and site tokens are one per site. To get a single token that covers every site in the workspace, register an OAuth app once and authorize it:
+
+1. Webflow > Workspace settings > Apps & integrations > **Develop** > Create an app. Type: Data client. Redirect URI: `http://localhost:8787/callback`. Enable these scopes: authorized_user:read, sites (read/write), pages (read/write), cms (read/write), custom_code (read/write), assets:read, forms:read.
+2. Copy the app's Client ID and Client Secret.
+3. `npm run auth`: paste both, the browser opens Webflow's authorize page, pick the workspace and select all sites. The script exchanges the code, verifies the token and saves it to `.env`. It does not expire unless revoked.
+4. `npm run setup` to generate `clients.json`.
+
+New client site later? Run `npm run auth` again and include it, then `npm run setup` adds it to the registry.
+
+### Setup script
+
 `npm run setup` installs and builds, asks for a Webflow token (Workspace settings > Apps & integrations > API access; scopes: sites, pages, cms, custom_code) and stores it in `.env`, then lists every site the token can reach and writes them to `clients.json` with generated aliases. Re-running keeps existing tokens and entries. It ends by printing the Claude config snippet.
 
 To replace the token later, run `npm run token`: it verifies the new token against Webflow and only saves it when it works.

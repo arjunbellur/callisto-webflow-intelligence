@@ -12,6 +12,7 @@
   },
   "scripts": {
     "setup": "npm install --no-audit --no-fund && tsx scripts/setup.ts",
+    "auth": "tsx scripts/auth.ts",
     "token": "tsx scripts/token.ts",
     "build": "tsc -p tsconfig.build.json",
     "dev": "tsx src/index.ts",

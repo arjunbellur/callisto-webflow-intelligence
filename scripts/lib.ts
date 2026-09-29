@@ -34,26 +34,31 @@ export function prompt(question: string, secret = false): Promise<string> {
   });
 }
 
-export function readEnvToken(): string | undefined {
+/** Reads one variable from .env (quotes stripped). */
+export function readEnvVar(name: string): string | undefined {
   if (!existsSync(envFile)) return undefined;
   const line = readFileSync(envFile, "utf8")
     .split("\n")
-    .find((l) => l.startsWith(`${TOKEN_VAR}=`));
-  const value = line?.slice(TOKEN_VAR.length + 1).trim().replace(/^["']|["']$/g, "");
+    .find((l) => l.startsWith(`${name}=`));
+  const value = line?.slice(name.length + 1).trim().replace(/^["']|["']$/g, "");
   return value || undefined;
 }
 
-export function writeEnvToken(token: string): void {
+/** Sets one variable in .env, creating the file from .env.example when needed. */
+export function writeEnvVar(name: string, value: string): void {
   const template = existsSync(envFile)
     ? readFileSync(envFile, "utf8")
     : readFileSync(path.join(root, ".env.example"), "utf8");
   const lines = template.split("\n");
-  const idx = lines.findIndex((l) => l.startsWith(`${TOKEN_VAR}=`));
-  const entry = `${TOKEN_VAR}=${token}`;
+  const idx = lines.findIndex((l) => l.startsWith(`${name}=`));
+  const entry = `${name}=${value}`;
   if (idx >= 0) lines[idx] = entry;
   else lines.unshift(entry);
   writeFileSync(envFile, lines.join("\n"), "utf8");
 }
+
+export const readEnvToken = () => readEnvVar(TOKEN_VAR);
+export const writeEnvToken = (token: string) => writeEnvVar(TOKEN_VAR, token);
 
 export type TokenCheck = { ok: true; sites: Site[] } | { ok: false; reason: string };
 
