@@ -60,6 +60,8 @@ Manual alternative: `cp clients.example.json clients.json`, `cp .env.example .en
 
 Claude Code (CLI): `claude mcp add --scope user callisto -- node /absolute/path/to/callisto-webflow-intelligence/dist/index.js`
 
+Claude Code on the web (cloud sessions): the repo ships `.mcp.json`, which registers the server for any session opened on this repo. Add `WEBFLOW_API_TOKEN` as an environment credential and allow `api.webflow.com` in the environment's network settings, and run `npm ci && npm run build` (a SessionStart hook or setup script can do this automatically).
+
 Run `npm run inspect` to try the tools in the MCP Inspector.
 
 ## Tools
