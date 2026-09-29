@@ -56,7 +56,11 @@ Manual alternative: `cp clients.example.json clients.json`, `cp .env.example .en
 }
 ```
 
-The server reads `clients.json` and `.env` from its working directory. Run `npm run inspect` to try the tools in the MCP Inspector.
+`cwd` is optional: the server falls back to its own repo folder for `clients.json` and `.env`.
+
+Claude Code (CLI): `claude mcp add --scope user callisto -- node /absolute/path/to/callisto-webflow-intelligence/dist/index.js`
+
+Run `npm run inspect` to try the tools in the MCP Inspector.
 
 ## Tools
 
