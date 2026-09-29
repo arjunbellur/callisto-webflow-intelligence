@@ -26,10 +26,13 @@ function run(cmd: string): void {
   execSync(cmd, { cwd: root, stdio: "inherit" });
 }
 
-/** Derives a registry alias from a site's short name, ensuring uniqueness. */
+/**
+ * Derives a registry alias from the site's display name (the short name is the webflow.io
+ * subdomain and often carries collision suffixes like "-2" or "-f71ed5"), ensuring uniqueness.
+ */
 function toAlias(site: Site, taken: Set<string>): string {
   const base =
-    (site.shortName || site.displayName)
+    (site.displayName || site.shortName)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "") || "site";
