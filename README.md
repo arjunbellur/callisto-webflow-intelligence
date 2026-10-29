@@ -73,7 +73,7 @@ Claude Code asks before every MCP tool call unless the tool is allowlisted. Call
 }
 ```
 
-This applies to anyone who opens the repo in Claude Code, including cloud sessions. If you registered the server at user scope with `claude mcp add` and work from another folder, add the same `permissions.allow` entry to `~/.claude/settings.json` (or run `/permissions` and add `mcp__callisto`).
+This applies to anyone who opens the repo in Claude Code, including cloud sessions. On a local machine the rule takes effect once you accept the one-time "trust this folder" prompt. If you registered the server at user scope with `claude mcp add` and work from another folder, add the same `permissions.allow` entry to `~/.claude/settings.json` (or run `/permissions` and add `mcp__callisto`).
 
 To keep a hard stop on going live, add an `ask` rule; it wins over `allow`:
 
