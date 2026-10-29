@@ -60,7 +60,26 @@ Manual alternative: `cp clients.example.json clients.json`, `cp .env.example .en
 
 Claude Code (CLI): `claude mcp add --scope user callisto -- /absolute/path/to/callisto-webflow-intelligence/bin/callisto` (the launcher builds on first use)
 
-Claude Code on the web (cloud sessions): the repo ships `.mcp.json`, which registers the server for any session opened on this repo. Add `WEBFLOW_API_TOKEN` as an environment credential and allow `api.webflow.com` in the environment's network settings, and run `npm ci && npm run build` (a SessionStart hook or setup script can do this automatically).
+Claude Code on the web (cloud sessions): the repo ships `.mcp.json`, which registers the server for any session opened on this repo. Add `WEBFLOW_API_TOKEN` as an environment credential and allow `api.webflow.com` in the environment's network settings. The SessionStart hook in `.claude/settings.json` installs and builds the server.
+
+### Permissions: no prompt per tool call
+
+Claude Code asks before every MCP tool call unless the tool is allowlisted. Callisto already guards its own writes (dry run, `planId`, snapshots, audit log, staging until publish), so a second prompt from the host on each call only adds friction. The repo's `.claude/settings.json` therefore allows the whole server:
+
+```json
+{
+  "enableAllProjectMcpServers": true,
+  "permissions": { "allow": ["mcp__callisto"] }
+}
+```
+
+This applies to anyone who opens the repo in Claude Code, including cloud sessions. If you registered the server at user scope with `claude mcp add` and work from another folder, add the same `permissions.allow` entry to `~/.claude/settings.json` (or run `/permissions` and add `mcp__callisto`).
+
+To keep a hard stop on going live, add an `ask` rule; it wins over `allow`:
+
+```json
+"permissions": { "allow": ["mcp__callisto"], "ask": ["mcp__callisto__site_publish"] }
+```
 
 Run `npm run inspect` to try the tools in the MCP Inspector.
 
@@ -90,6 +109,8 @@ Run `npm run inspect` to try the tools in the MCP Inspector.
 1. Call the tool. It reads live state, computes the change and returns `{ status: "planned", planId, changes }`. Nothing is written.
 2. Call again with `confirm: true` and that `planId`. The server re-reads live state; if the arguments or the site changed since step 1, the plan is rejected. Otherwise it saves a snapshot, writes, and appends to the audit log.
 
+The two phases are one action for the agent. The server's instructions tell Claude to check the dry-run diff against the request and confirm in the same turn when it contains only what was asked for. Claude stops to ask only when the diff touches something the request did not mention, the plan is rejected, the target client or page is ambiguous, or you asked for a preview. The dry run protects against stale state and wrong-site mistakes; it is not a prompt.
+
 All content writes are staged in Webflow. Nothing reaches the live site until `site_publish`.
 
 ## Recommended workflow with Claude
@@ -98,14 +119,14 @@ All content writes are staged in Webflow. Nothing reaches the live site until `s
 1. clients_list                          -> pick the alias
 2. page_content_snapshot (for layout work) or pages_list / cms_items_find
 3. Edit:
-   - copy, SEO, CMS, scripts       -> Callisto guarded tools (dry run, review, confirm)
+   - copy, SEO, CMS, scripts       -> Callisto guarded tools (dry run, check diff, confirm in one go)
    - elements, styles, components  -> official Webflow MCP with the client's siteId,
                                       then change_record so the audit trail is complete
-4. site_publish (dry run shows everything that will ship, then confirm)
+4. site_publish, only when you asked for the change to go live (dry run lists what ships, then confirm)
 5. verify_live with the strings you expect on the page
 ```
 
-The server's MCP instructions tell Claude to follow this order automatically.
+The server's MCP instructions tell Claude to follow this order automatically, without pausing between steps. A single request such as "update the pricing page SEO title for Acme and publish" runs end to end; "update the pricing page SEO title for Acme" stops at staged and says so.
 
 ## Design notes
 

@@ -11,7 +11,10 @@ export const clientArg = z.string().min(1).describe("Client alias from the Calli
 export const confirmArg = z
   .boolean()
   .default(false)
-  .describe("false (default) = dry run that returns a diff and planId. true = apply the plan identified by planId.");
+  .describe(
+    "false (default) = dry run that returns a diff and planId. true = apply the plan identified by planId. " +
+      "Confirm in the same turn once the diff contains only what was requested.",
+  );
 export const planIdArg = z.string().optional().describe("planId returned by the dry run. Required when confirm is true.");
 export const pageArg = z
   .string()

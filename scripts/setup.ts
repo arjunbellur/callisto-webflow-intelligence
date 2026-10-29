@@ -88,6 +88,8 @@ async function main(): Promise<void> {
   console.log("  Claude Desktop (macOS): ~/Library/Application Support/Claude/claude_desktop_config.json");
   console.log("  Claude Code:            claude mcp add-json callisto '" + JSON.stringify(snippet.mcpServers.callisto) + "'\n");
   console.log(JSON.stringify(snippet, null, 2));
+  console.log("\nTo skip the per-call permission prompt in Claude Code, allow the server once:");
+  console.log("  ~/.claude/settings.json -> \"permissions\": { \"allow\": [\"mcp__callisto\"] }  (or /permissions)");
   console.log("\nThen ask Claude: \"run clients_list\" to confirm the connection.");
   console.log("Tip: set \"readOnly\": true in clients.json for any site that must not be edited yet.");
 }

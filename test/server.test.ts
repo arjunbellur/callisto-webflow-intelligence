@@ -67,6 +67,23 @@ describe("callisto MCP server", () => {
     );
   });
 
+  it("annotates every tool so hosts can tell reads from guarded writes", async () => {
+    const { client } = await connect(makeContext(pageApi()).ctx);
+    const tools = await client.listTools();
+    const readOnly = new Set(["audit_query", "client_overview", "clients_list", "cms_collections_list", "cms_items_find", "code_list", "page_content_snapshot", "pages_list", "verify_live"]);
+    for (const tool of tools.tools) {
+      expect(tool.annotations, `${tool.name} has annotations`).toBeDefined();
+      expect(tool.annotations?.readOnlyHint, `${tool.name} readOnlyHint`).toBe(readOnly.has(tool.name));
+    }
+  });
+
+  it("tells the agent to confirm a matching diff without pausing", async () => {
+    const { client } = await connect(makeContext(pageApi()).ctx);
+    const instructions = client.getInstructions() ?? "";
+    expect(instructions).toMatch(/call again at once with confirm: true/);
+    expect(instructions).toMatch(/Do not stop to ask the user to approve a diff that matches their request/);
+  });
+
   it("runs dry run -> confirm -> audit -> restore for page settings", async () => {
     const { ctx, calls } = makeContext(pageApi());
     const { call } = await connect(ctx);
